@@ -1,0 +1,23 @@
+version: "3.8" 
+services: 
+  db1: 
+    image: ubuntu:db1 
+    build: 
+      context: . 
+      dockerfile: MDockerfile 
+    networks: 
+      - db_network 
+    ports: 
+      - 33060:3306 
+  db2: 
+    image: ubuntu:db2 
+    build: 
+      context: . 
+      dockerfile: SDockerfile 
+    networks: 
+      - db_network 
+    ports: 
+      - 33060:3306 
+networks: 
+  db_network: 
+  driver: bridge

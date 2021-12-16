@@ -1,0 +1,11 @@
+FROM ubuntu:20.04 
+MAINTAINER lxc 
+COPY sources.list /etc/apt 
+RUN apt update && apt dist-upgrade -y \ 
+             && apt install mariadb-server -y 
+COPY 50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf 
+RUN /etc/init.d/mysql start \ 
+             && mysql -u root -e "create user 'root'@'%' identified by '123456'" \ 
+             && mysql -u root -e "grant all on *.* to 'root'@'%'" 
+EXPOSE 3306 
+CMD /usr/bin/mysqld_safe 
